@@ -1,0 +1,8 @@
+str = 'X-DSPAM-Confidence: 0.8475 '
+
+stapos = str.find(":")
+stopos = str.find(" ", stapos+2)
+
+num = float(str[stapos+2:stopos])
+print(f"num: {num}")
+

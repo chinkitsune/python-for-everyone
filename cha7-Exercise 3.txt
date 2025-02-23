@@ -1,0 +1,19 @@
+fuser = input("Enter the file name: ")
+
+
+try:
+    if fuser.lower() == "na na boo boo":
+        print("NA NA BOO BOO TO YOU - You have been punk'd!")
+    else: 
+        with open(fuser) as fin:
+                count = 0
+
+                for line in fin:
+                    count += 1
+                print(count)        
+
+except FileNotFoundError:
+    print(f"File cannot be opened: {fuser}")
+    
+
+

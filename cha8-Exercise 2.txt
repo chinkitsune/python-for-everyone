@@ -1,0 +1,33 @@
+fhand = open("mbox-short.txt")
+week = ["mon", "tue", "wed", "thr", "fri", "sat", "sun"]
+count = 0
+
+for line in fhand:
+    words = line.split()
+    if len(words) == 0:
+        continue
+    elif words[0] != "From": 
+        continue
+    elif len(words) or not words[2].lower() in week: 
+        continue
+    else:
+        count += 1
+        print(words[2])
+        
+print(count)
+
+
+
+fhand = open("mbox-short.txt")
+week = ["mon", "tue", "wed", "thr", "fri", "sat", "sun"]
+count = 0
+
+for line in fhand:
+    words = line.split()
+    if len(words) > 3 and words[0] == "From" and words[2].lower() in week: 
+        count += 1
+        print(words[2])
+    else:
+        continue
+        
+print(count)

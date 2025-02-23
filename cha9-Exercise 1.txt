@@ -1,0 +1,12 @@
+worddict = dict()
+with open("words.txt") as fhand:
+    for line in fhand:
+        words = line.split()
+        for word in words:
+            worddict[word] = None
+        
+def check(string):
+    if string in worddict:
+        print("yes")
+    else:
+        print(false)

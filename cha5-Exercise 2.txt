@@ -1,0 +1,18 @@
+numbers = []
+
+while True:
+    userenter = input("Enter a number:")
+    if userenter == "done":
+        break
+    try:
+        number = float(userenter)
+        numbers.append(number)
+    except:
+         print("please enter a numeric number or enter 'done' to quit")
+
+if numbers:
+    max = max(numbers)
+    min = min(numbers)
+    print(max, min)
+else:
+    print("No valid numbers were enter")

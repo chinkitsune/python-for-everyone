@@ -1,0 +1,13 @@
+fhand = open("mbox-short.txt")
+week = ["mon", "tue", "wed", "thr", "fri", "sat", "sun"]
+count = 0
+
+for line in fhand:
+    words = line.split()
+    if len(words) == 0 or words[0] != "From"or not words[2].lower() in week: 
+        continue
+    else:
+        count += 1
+        print(words[2])
+        
+print(count)

@@ -1,0 +1,5 @@
+word = "banana"
+
+times = word.count('a')
+
+print(times)

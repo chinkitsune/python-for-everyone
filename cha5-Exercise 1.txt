@@ -1,0 +1,21 @@
+sum = 0;
+count = 0
+
+
+
+while True: 
+    number = input("Enter a number:")
+    try:
+        if number == "done":
+            avg = sum/count
+            print(sum, count, avg)
+            break
+        else:
+            sum = sum + int(number)
+            count = count + 1
+    except:
+        print("please enter a numeric number or enter 'done' to quit")
+
+
+
+    

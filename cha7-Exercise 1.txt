@@ -1,0 +1,16 @@
+# opening source file in read mode, and output file in write mode
+fin = open("mbox-short.txt")
+fout = open("output.txt", "w")
+
+# read data from source file, and then write in upper form into the output file
+for line in fin:
+    fout.write(line.upper())
+
+fout.close()
+
+# print data from the output file
+fout = open("output.txt", "r")
+
+for line in fout:
+    print(line)
+    

@@ -1,0 +1,23 @@
+fuser = input("Enter the file name you want to process:")
+
+count = 0
+sum = 0.0
+try:
+    with open(fuser) as fhand:
+        for line in fhand:
+           
+            if line.startswith("X-DSPAM-Confidence:"):
+                try:
+                    number = float(line.split(":")[1].strip())
+                    sum = sum + number
+                    count += 1
+                except ValueError:
+                    continue
+    if count > 0:
+        avg = sum/count
+        print(f"sum: {sum}, count: {count},avg: {avg}")
+    else:
+        print(f"could not find any corresponding data")
+
+except FileNotFoundError:
+    print(f" {fuser} file counld not be opened, please check")

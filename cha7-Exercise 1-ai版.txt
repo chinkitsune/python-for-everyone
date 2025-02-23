@@ -1,0 +1,9 @@
+fuser = input("1Enter the file name you want to process: ")
+
+try:
+    fhand = open(fuser)
+
+    for line in fhand:
+        print(line.upper())
+except FileNotFoundError:
+    print(f"File cannot be opened: {fuser}")

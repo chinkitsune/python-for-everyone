@@ -1,0 +1,8 @@
+fruit = "banana"
+
+last = len(fruit)-1
+
+while last > -1:
+    cha = fruit[last]
+    print(cha)
+    last = last -1

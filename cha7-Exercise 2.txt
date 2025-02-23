@@ -1,0 +1,21 @@
+
+
+fuser = input("Enter the file you want to process: ")
+
+try:
+    fin = open(fuser)
+except:
+    print("could not open this file, please check")
+    
+count = 0
+sum = 0
+begin = "X-DSPAM-Confidence:"
+
+for line in fin:
+    if line.startswith(begin):
+        atpos = line.find(":")
+        number = line[atpos+1:]
+        count += 1
+        sum = sum + float(number)
+avg = sum /count
+print(f"sum: {sum}, avg: {avg}, number of line: {count}")

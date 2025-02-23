@@ -1,0 +1,11 @@
+def count(str, cha):
+    count = 0
+    for letter in str:
+        if letter == cha:
+            count = count + 1
+    print(count)
+
+word = input("Enter the string")
+
+cha = input("Enter the character")
+count(word, cha)

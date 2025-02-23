@@ -1,0 +1,21 @@
+def mails(string):
+    with open(string, "r") as fhand:
+        for line in fhand:
+            if line.startswith("From"):
+                words = line.split()
+                if len(words) > 1 and "@" in words[1]:
+                    mail = words[1]
+                    domain  = mail[mail.find("@")+1:]
+                    mailadds[domain] = mailadds.get(domain, 0) + 1
+            else:continue
+
+
+fuser = input("enter the file you want to process: ")
+mailadds = dict()
+
+try:
+    mails(fuser)
+    print(mailadds)
+except FileNotFoundError:
+    print(f"the {fuser} file could not be opened, please check")
+    exit()

@@ -1,0 +1,16 @@
+fuser = input("Please enter the file you want to process:")
+
+dictlist = []
+
+try:
+    with open(fuser, "r") as fhand:
+        for line in fhand:
+            words = line.split()
+            for i in range(len(words)):
+                if not words[i] in dictlist:
+                    dictlist.append(words[i])
+        dictlist.sort()
+        print(dictlist)    
+        
+except FileNotFoundError:
+    print(f"the {fuser} file could not be opened")

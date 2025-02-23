@@ -1,0 +1,10 @@
+def middle(t):
+    if t < 2:
+        return None
+    else:
+        newt = t[1:-1]
+        return newt
+
+letters = ['a', 'b', 'c']
+
+print(middle(letters))

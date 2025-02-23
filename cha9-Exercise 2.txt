@@ -1,0 +1,29 @@
+def daycate(string):
+    # open file
+    with open(string, "r") as fhand:
+        for line in fhand:
+            # look for the sentences start with "from"
+            if line.startswith("From"):
+                words = line.split()
+                # check whether the third element in split words is week abbreviation
+                if len(words) > 2 and words[2].lower() in week:
+                    wd[words[2]] = wd.get(words[2],0)+1
+            else:continue
+
+# prompt user to enter the file name
+fuser = input("please enter the file you want to process: ")
+week = ["mon", "tue", "wed", "thr", "fri", "sat", "sun"]
+wd = dict()
+
+# handle error
+try:
+    daycate(fuser)
+    print(wd)
+except FileNotFoundError:
+    print(f"the {fuser} file could not be opened")
+    exit()
+    
+
+
+    
+    

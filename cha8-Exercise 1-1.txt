@@ -1,0 +1,11 @@
+def chop(t):
+    if len(t) < 2:
+        t.clear()
+    else:
+        del t[0]
+        del t[-1]
+    return None
+
+letters = ['a', 'b', 'c']
+
+print(chop(letters))

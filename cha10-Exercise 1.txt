@@ -1,0 +1,33 @@
+def main():
+    # prompt the user for file name
+    fuser = input("Please enter the file you want to process: ")
+    
+    # handle error
+    try:
+        mails = dict()
+        openfile(fuser, mails)
+        findthemostcommit(mails)
+    except FileNotFoundError:
+        print(f"The {fuser} file could not be opened, please check")
+        
+
+
+# open file and start to parse data
+def openfile(fuser, mails):
+    with open(fuser, "r") as fhand:
+        for line in fhand:
+            # select lines start with From
+            if line.startswith("From"):
+                words = line.split()
+                if len(words) > 1 and "@" in words[1]:
+                    mail = words[1]
+                    mails[mail] = mails.get(mail, 0) + 1
+            else:continue
+    return mails
+    
+def findthemostcommit(mails):
+    t = [(count, email) for email, count in mails.items() ]
+    t.sort(reverse = True)
+    print(f"{t[0][1]} {t[0][0]}")
+        
+main()

@@ -1,0 +1,27 @@
+def main():
+    fuser = input("please enter the file name you want to process: ")
+    
+    try:
+        hours = dict()
+        find_out_hour(fuser, hours)
+
+        for hour in sorted(hours):
+            print(hour, hours[hour])
+    except FileNotFoundError:
+        print(f"the {fuser} file could not be opened, please check")
+        exit()
+
+
+def find_out_hour(fuser, hours):
+    with open(fuser, "r") as fhand:
+        for line in fhand:
+            if line.startswith("From"):
+                words = line.split()
+                if len(words) > 6 and "@" in words[1]:
+                    time = words[5].split(":")[0]
+                    hours[time] = hours.get(time, 0) + 1
+            else:continue
+
+
+
+main()

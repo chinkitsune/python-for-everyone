@@ -1,0 +1,21 @@
+import re
+
+def main():
+    fuser = input("Please enter the file you want to process")
+    
+    try:
+        count = 0
+        sum = 0
+        with open(fuser, "r") as fhand:
+            for line in fhand:
+                if re.search("^New Revision:", line):
+                    number = float(re.findall(": ([0-9]+)", line)[0])
+                    count += 1
+                    sum = sum + number
+        avg = sum / count
+        print(avg)
+    except FileNotFoundError:
+        print(f"the {fuser} file could not be opened, please check")
+    
+    
+main()

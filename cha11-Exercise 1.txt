@@ -1,0 +1,20 @@
+import re
+
+def main():
+    with open("mbox.txt", "r") as fhand:
+        count = 0
+        user_expression = input("Enter a regular expression: ")
+        
+        for line in fhand:
+            line = line.rstrip()
+            if re.search(user_expression, line):
+                count += 1
+        print(f"mbox.txt had {count} lines that matched {user_expression}")
+
+
+    
+    
+    
+    
+main()
+

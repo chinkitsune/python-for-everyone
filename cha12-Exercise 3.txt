@@ -1,0 +1,41 @@
+import urllib.request, urllib.error
+
+def main():
+    # Example usage
+    url = input("please enter a formated url(like https://cn.bing.com/) :")
+    try:
+        preview, char_count = fetch_url_content(url)
+        print(f"Fetching content from: {url}") # Added this line
+        print(f"First 3000 characters of the document:")
+        print("-" * 50)
+        print(preview)
+        print("-" * 50)
+        print(f"Total number of characters in the document: {char_count}")
+    except ValueError:
+        print("Invalid url, please check")
+
+
+
+def fetch_url_content(url):
+    try:
+        # Open the URL and read its content
+        with urllib.request.urlopen(url) as response:
+            # Read all content as bytes and decode to string
+            content = response.read().decode('utf-8', errors='ignore')
+            
+            # Get the total character count
+            total_chars = len(content)
+            
+            # Display the first 3000 characters
+            first_3000 = content[:3000]
+            
+            return first_3000, total_chars
+    # More specific error message        
+    except urllib.error.URLError as e:
+        return f"Network error: {e.reason}", 0 
+    # Generic error handling    
+    except Exception as e:
+        return f"An error occurred: {e}", 0 
+
+
+main()

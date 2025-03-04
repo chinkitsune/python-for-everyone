@@ -1,0 +1,55 @@
+import socket
+import urllib.parse
+
+def fetch_web_page():
+    # Prompt user for URL
+    url = input('Enter URL: ')
+    
+    try:
+        # Parse the URL to extract host and path
+        parsed_url = urllib.parse.urlparse(url)
+        host = parsed_url.netloc
+        path = parsed_url.path
+        
+        # If path is empty, use /
+        if not path:
+            path = '/'
+            
+        # Create a socket (think of it as creating a phone)
+        mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        
+        try:
+            # Connect to the server (like dialing a phone number)
+            mysock.connect((host, 80))
+            
+            # Create the HTTP request (like asking a question over the phone)
+            cmd = f'GET {url} HTTP/1.0\r\n\r\nHost: {host}\r\n\r\n'.encode()
+            mysock.send(cmd)
+            
+            # Collect all data
+            data_chunks = []
+            
+            # Receive data (like listening to the answer)
+            while True:
+                data = mysock.recv(512)
+                if len(data) < 1:
+                    break
+                data_chunks.append(data)
+            
+            # Combine all chunks and decode
+            all_data = b''.join(data_chunks).decode()
+            print(all_data)
+            
+        except socket.error as e:
+            print(f"Socket error: {e}")
+        finally:
+            # Close the connection (like hanging up the phone)
+            mysock.close()
+            
+    except ValueError:
+        print("Error: Invalid URL format. Please use format like 'http://example.com/page'")
+    except Exception as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    fetch_web_page()

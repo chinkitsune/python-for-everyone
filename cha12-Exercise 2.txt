@@ -1,0 +1,66 @@
+import socket
+import urllib.parse
+
+def fetch_web_page():
+    # Prompt user for URL
+    url = input('Enter URL: ')
+    
+    try:
+        # Parse the URL to extract host and path
+        parsed_url = urllib.parse.urlparse(url)
+        host = parsed_url.netloc
+        
+        # If host is empty, URL might be invalid
+        if not host:
+            raise ValueError("Invalid URL: Could not extract host name")
+            
+        # Create a socket
+        mysock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        
+        try:
+            # Connect to the server
+            mysock.connect((host, 80))
+            
+            # Create the HTTP request
+            cmd = f'GET {url} HTTP/1.0\r\nHost: {host}\r\n\r\n'.encode()
+            mysock.send(cmd)
+            
+            # Variables to store and count data
+            all_data = b''
+            displayed_chars = 0
+            display_limit = 3000
+            
+            # Receive data
+            while True:
+                data = mysock.recv(512)
+                if len(data) < 1:
+                    break
+                all_data += data
+            
+            # Decode all data
+            decoded_data = all_data.decode()
+            total_chars = len(decoded_data)
+            
+            # Display only the first 3000 characters
+            if total_chars <= display_limit:
+                print(decoded_data)
+            else:
+                print(decoded_data[:display_limit])
+                print("\n... [Remaining text truncated] ...\n")
+            
+            # Display character count
+            print(f"\nTotal characters received: {total_chars}")
+            
+        except socket.error as e:
+            print(f"Socket error: {e}")
+        finally:
+            # Close the connection
+            mysock.close()
+            
+    except ValueError as e:
+        print(f"Error: {e}")
+    except Exception as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    fetch_web_page()

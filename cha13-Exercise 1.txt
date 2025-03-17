@@ -1,0 +1,75 @@
+import urllib.request, urllib.parse, urllib.error
+import xml.etree.ElementTree as ET
+import ssl
+
+api_key = False
+
+if api_key is False:
+    api_key = 42
+    serviceurl = 'http://py4e-data.dr-chuck.net/xml?'
+else:
+    serviceurl = 'https://maps.googleapis.com/maps/api/geocode/xml?'
+
+# Ignore SSL certificate errors
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
+
+while True:
+    address = input('Enter location: ')
+    if len(address) < 1:
+        break
+
+    parms = {'address': address}
+    if api_key is not False:
+        parms['key'] = api_key
+
+    url = serviceurl + urllib.parse.urlencode(parms)
+    print('Retrieving', url)
+
+    # Handle network errors (e.g., no internet, API down)
+    try:
+        uh = urllib.request.urlopen(url, context=ctx)
+        data = uh.read()
+    except urllib.error.URLError as e:
+        print(f"Network error: {e.reason}")
+        continue
+
+    print('Retrieved', len(data), 'characters')
+
+    try:
+        tree = ET.fromstring(data)
+    except ET.ParseError:
+        print("Error: Unable to parse XML response.")
+        continue
+
+    # Check API status in XML response
+    status = tree.find('status')
+    if status is None or status.text != "OK":
+        print(f"API error: {status.text if status is not None else 'No status found'}")
+        continue
+
+    results = tree.findall('result')
+    if not results:
+        print("No location results found. Check your query.")
+        continue
+
+    lat = results[0].find('geometry').find('location').find('lat').text
+    lng = results[0].find('geometry').find('location').find('lng').text
+    location = results[0].find('formatted_address').text
+
+    print('lat', lat, 'lng', lng)
+    print(location)
+
+    # Extract country code
+    country_code = None
+    for component in results[0].findall('address_component'):
+        types = [t.text for t in component.findall('type')]
+        if 'country' in types:
+            country_code = component.find('short_name').text
+            break
+
+    if country_code:
+        print('Country code:', country_code)
+    else:
+        print('Country code not found for this location.')
